@@ -67,6 +67,13 @@ class GildedRoseTest {
     }
 
 
+    @Test
+    void givenAgedBrieSellInNegativeQualityIncreasedBy1(){
+        Item[] items = new Item[]{new Item("Aged Brie", -1, 20)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(21, app.items[0].quality);
+    }
 
     @Test
     void givenAgedBrieItemQualityIncreasedNotToAboveMax() {
