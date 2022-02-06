@@ -28,19 +28,17 @@ class GildedRose {
 
 
     private void updateNormalItem(Item item) {
-        if (item.quality > 0) {
-            if (item.sellIn <= 0) {
-                item.quality -= 2;
-            } else {
-                item.quality--;
-            }
+        int by;
+        if (isExpired(item)) {
+            by = 2;
+        } else {
+            by = 1;
         }
+        decreaseQualityBy(item, by);
     }
 
     private void updateAgedItem(Item item) {
-        if (item.quality < 50) {
-            item.quality++;
-        }
+        increaseQualityBy(item, 1);
     }
 
     private void updateAgedItemControlled(Item item) {
@@ -61,12 +59,18 @@ class GildedRose {
 
 
     private Boolean isExpired(Item item) {
-        return item.sellIn < 0;
+        return item.sellIn <= 0;
     }
 
     private void increaseQualityBy(Item item, int by) {
         if (item.quality < 50) {
             item.quality += by;
+        }
+    }
+
+    private void decreaseQualityBy(Item item, int by) {
+        if (item.quality > 0) {
+            item.quality -= by;
         }
     }
 }
