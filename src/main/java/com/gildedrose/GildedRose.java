@@ -42,19 +42,23 @@ class GildedRose {
     }
 
     private void updateAgedItemControlled(Item item) {
-        if (item.sellIn > 0) {
-            if (item.quality < 50) {
-                item.quality++;
-                if (item.sellIn <= 10) {
-                    item.quality++;
-                    if (item.sellIn <= 5) {
-                        item.quality++;
-                    }
-                }
-            }
-        } else {
+        if (isExpired(item)) {
             item.quality = 0;
+        } else {
+            increaseQualityBy(item, getAgedItemControlledQualityIncreaseRate(item));
         }
+    }
+
+
+    private int getAgedItemControlledQualityIncreaseRate(Item item) {
+        int by = 1;
+        if (item.sellIn <= 10) {
+            by++;
+            if (item.sellIn <= 5) {
+                by++;
+            }
+        }
+        return by;
     }
 
 
