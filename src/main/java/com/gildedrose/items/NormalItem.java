@@ -22,8 +22,6 @@ public class NormalItem extends UpdatableItem {
         } else {
             by = 1;
         }
-        if (item.quality > 0) {
-            item.quality -= by * factor;
-        }
+        increaseQualityBy(by);
     }
 }

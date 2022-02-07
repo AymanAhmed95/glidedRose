@@ -19,4 +19,13 @@ public abstract class UpdatableItem {
         return item.sellIn <= 0;
     }
 
+    protected void increaseQualityBy(int by) {
+        int newQuality = item.quality + by;
+        item.quality = Math.min(newQuality, 50);
+    }
+
+    protected void decreaseQualityBy(int by) {
+        int newQuality = item.quality - by;
+        item.quality = Math.max(newQuality, 0);
+    }
 }
