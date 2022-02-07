@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.items.*;
+
 class GildedRose {
     Item[] items;
 
@@ -17,7 +19,10 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            ItemType itemType = getItemType(item);
+            UpdatableItem updatableItem = getUpdatableItem(item);
+            updatableItem.updateQuality();
+            updatableItem.updateSellIn();
+          /*  ItemType itemType = getItemType(item);
             if (itemType == ItemType.LEGENDARY)
                 continue;
             switch (itemType) {
@@ -33,7 +38,7 @@ class GildedRose {
                 case QUICK_EXPIRE:
                     updateQuickExpireItem(item);
             }
-            item.sellIn = item.sellIn - 1;
+            item.sellIn = item.sellIn - 1;*/
         }
     }
 
@@ -108,7 +113,6 @@ class GildedRose {
         return item.sellIn <= 0;
     }
 
-
     private ItemType getItemType(Item item) {
         if (item.name.equals("Sulfuras, Hand of Ragnaros"))
             return ItemType.LEGENDARY;
@@ -119,5 +123,21 @@ class GildedRose {
         else if (item.name.equals("Conjured"))
             return ItemType.QUICK_EXPIRE;
         else return ItemType.NORMAL;
+    }
+
+
+    private UpdatableItem getUpdatableItem(Item item) {
+        switch (item.name) {
+            case "Aged Brie":
+                return new AgedItem(item);
+            case "Backstage passes to a TAFKAL80ETC concert":
+                return new ControlledAgedItem(item);
+            case "Sulfuras, Hand of Ragnaros":
+                return new LegendaryItem(item);
+            case "Conjured":
+                return new NormalItem(item, 2);
+            default:
+                return new NormalItem(item);
+        }
     }
 }
