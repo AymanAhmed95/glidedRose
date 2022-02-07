@@ -3,24 +3,29 @@ package com.gildedrose;
 class GildedRose {
     Item[] items;
 
+    enum ItemType {
+        NORMAL, AGED, CONTROLLED_AGED, LEGENDARY
+    }
+
     public GildedRose(Item[] items) {
         this.items = items;
     }
 
     public void updateQuality() {
         for (Item item : items) {
-            if (item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            ItemType itemType = getItemType(item);
+            if (itemType == ItemType.LEGENDARY)
                 continue;
-            }
-            if (!item.name.equals("Aged Brie")
-                    && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                updateNormalItem(item);
-            } else {
-                if (item.name.equals("Aged Brie")) {
+            switch (itemType) {
+                case NORMAL:
+                    updateNormalItem(item);
+                    break;
+                case AGED:
                     updateAgedItem(item);
-                } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    updateAgedItemControlled(item);
-                }
+                    break;
+                case CONTROLLED_AGED:
+                    updateControlledAgedItem(item);
+                    break;
             }
             item.sellIn = item.sellIn - 1;
         }
@@ -41,7 +46,7 @@ class GildedRose {
         increaseQualityBy(item, 1);
     }
 
-    private void updateAgedItemControlled(Item item) {
+    private void updateControlledAgedItem(Item item) {
         if (isExpired(item)) {
             item.quality = 0;
         } else {
@@ -79,5 +84,15 @@ class GildedRose {
         if (item.quality > 0) {
             item.quality -= by;
         }
+    }
+
+    private ItemType getItemType(Item item) {
+        if (item.name.equals("Sulfuras, Hand of Ragnaros"))
+            return ItemType.LEGENDARY;
+        else if (item.name.equals("Aged Brie"))
+            return ItemType.AGED;
+        else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert"))
+            return ItemType.CONTROLLED_AGED;
+        else return ItemType.NORMAL;
     }
 }
