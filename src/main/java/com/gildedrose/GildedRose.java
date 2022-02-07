@@ -30,6 +30,8 @@ class GildedRose {
                 case CONTROLLED_AGED:
                     updateControlledAgedItem(item);
                     break;
+                case QUICK_EXPIRE:
+                    updateQuickExpireItem(item);
             }
             item.sellIn = item.sellIn - 1;
         }
@@ -37,13 +39,29 @@ class GildedRose {
 
 
     private void updateNormalItem(Item item) {
+        decreaseNormalItemQuality(item, 1);
+    }
+
+    private void updateQuickExpireItem(Item item) {
+        int factor = getQuickExpireFactor(item);
+        decreaseNormalItemQuality(item, factor);
+    }
+
+    private int getQuickExpireFactor(Item item) {
+        int factor = 1;
+        if (item.name.equals("Conjured"))
+            factor = 2;
+        return factor;
+    }
+
+    private void decreaseNormalItemQuality(Item item, int factor) {
         int by;
         if (isExpired(item)) {
             by = 2;
         } else {
             by = 1;
         }
-        decreaseQualityBy(item, by);
+        decreaseQualityBy(item, by * factor);
     }
 
     private void updateAgedItem(Item item) {
@@ -74,10 +92,6 @@ class GildedRose {
         return start <= number && number <= end;
     }
 
-    private Boolean isExpired(Item item) {
-        return item.sellIn <= 0;
-    }
-
     private void increaseQualityBy(Item item, int by) {
         if (item.quality < 50) {
             item.quality += by;
@@ -89,6 +103,11 @@ class GildedRose {
             item.quality -= by;
         }
     }
+
+    private Boolean isExpired(Item item) {
+        return item.sellIn <= 0;
+    }
+
 
     private ItemType getItemType(Item item) {
         if (item.name.equals("Sulfuras, Hand of Ragnaros"))
