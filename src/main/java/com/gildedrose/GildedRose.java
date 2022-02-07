@@ -4,7 +4,11 @@ class GildedRose {
     Item[] items;
 
     enum ItemType {
-        NORMAL, AGED, CONTROLLED_AGED, LEGENDARY
+        NORMAL,
+        QUICK_EXPIRE,
+        AGED,
+        CONTROLLED_AGED,
+        LEGENDARY
     }
 
     public GildedRose(Item[] items) {
@@ -93,6 +97,8 @@ class GildedRose {
             return ItemType.AGED;
         else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert"))
             return ItemType.CONTROLLED_AGED;
+        else if (item.name.equals("Conjured"))
+            return ItemType.QUICK_EXPIRE;
         else return ItemType.NORMAL;
     }
 }

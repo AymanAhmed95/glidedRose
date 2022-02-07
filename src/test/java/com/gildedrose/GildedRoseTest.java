@@ -68,7 +68,7 @@ class GildedRoseTest {
 
 
     @Test
-    void givenAgedBrieSellInNegativeQualityIncreasedBy1(){
+    void givenAgedBrieSellInNegativeQualityIncreasedBy1() {
         Item[] items = new Item[]{new Item("Aged Brie", -1, 20)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
@@ -142,6 +142,23 @@ class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(10, app.items[0].sellIn);
+    }
+
+
+    @Test
+    void givenConjuredItemSellInDecreasedBy1() {
+        Item[] items = new Item[]{new Item("Conjured", 10, 50)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(9, app.items[0].sellIn);
+    }
+
+    @Test
+    void givenConjuredItemQualityDecreasedBy2x() {
+        Item[] items = new Item[]{new Item("Conjured", 10, 50)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(48, app.items[0].quality);
     }
 
 }
