@@ -52,15 +52,18 @@ class GildedRose {
 
     private int getAgedItemControlledQualityIncreaseRate(Item item) {
         int by = 1;
-        if (item.sellIn <= 10) {
-            by++;
-            if (item.sellIn <= 5) {
-                by++;
-            }
+        if (inRangeInclusive(item.sellIn, 1, 5)) {
+            by = 3;
+        } else if (inRangeInclusive(item.sellIn, 6, 10)) {
+            by = 2;
         }
         return by;
     }
 
+
+    private boolean inRangeInclusive(int number, int start, int end) {
+        return start <= number && number <= end;
+    }
 
     private Boolean isExpired(Item item) {
         return item.sellIn <= 0;
