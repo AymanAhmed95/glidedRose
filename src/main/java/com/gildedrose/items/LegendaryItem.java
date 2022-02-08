@@ -14,4 +14,8 @@ public class LegendaryItem extends UpdatableItem {
     @Override
     public void updateSellIn() {
     }
+
+    public static LegendaryItem getInstance(Item item) {
+        return new LegendaryItem(item);
+    }
 }

@@ -14,4 +14,8 @@ public class AgedItem extends UpdatableItem {
             item.quality += 1;
         }
     }
+
+    public static AgedItem getInstance(Item item) {
+        return new AgedItem(item);
+    }
 }

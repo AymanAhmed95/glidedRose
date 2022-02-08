@@ -30,4 +30,9 @@ public class ControlledAgedItem extends UpdatableItem {
         }
         return by;
     }
+
+
+    public static ControlledAgedItem getInstance(Item item) {
+        return new ControlledAgedItem(item);
+    }
 }
