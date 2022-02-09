@@ -2,19 +2,19 @@ package com.gildedrose;
 
 import com.gildedrose.items.*;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 
 import com.gildedrose.factory.UpdatableItemFactory;
 
-class GildedRose {
+public class GildedRose {
     Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
     }
 
+    public GildedRose(){
+
+    }
     public void updateQuality() {
         for (Item item : items) {
             UpdatableItem updatableItem = UpdatableItemFactory.getUpdatableItem(item);
@@ -24,5 +24,11 @@ class GildedRose {
     }
 
 
+    public Item[] getItems() {
+        return items;
+    }
 
+    public void setItems(Item[] items){
+        this.items = items;
+    }
 }
